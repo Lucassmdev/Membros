@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sistema Igreja - Membros</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Sistema Igreja</a>
+        <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link" href="{{ url_for('logout') }}">Sair</a>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <h2>Lista de Membros</h2>
+        <a href="{{ url_for('novo_membro') }}" class="btn btn-primary mb-3">Novo Membro</a>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Data de Nascimento</th>
+                    <th>Telefone</th>
+                    <th>Batizado</th>
+                    <th>Escolaridade</th>
+                    <th>Data de Cadastro</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for membro in membros %}
+                <tr>
+                    <td>{{ membro.nome_completo }}</td>
+                    <td>{{ membro.data_nascimento.strftime('%d/%m/%Y') }}</td>
+                    <td>{{ membro.telefone }}</td>
+                    <td>{{ "Sim" if membro.batizado else "Não" }}</td>
+                    <td>{{ membro.escolaridade }}</td>
+                    <td>{{ membro.data_cadastro.strftime('%d/%m/%Y %H:%M') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
